@@ -5,7 +5,9 @@ function App() {
   const [count, setCount] = useState(0)
   const [test, setTest] = useState(0);
   const [dataUsers, setDataUsers] = useState([]);
+  const [dataUserInsert, setDataUserInsert] = useState([]);
 
+  // Connect to API
   const fetchDataUsers = async () => {
     try{
       const response = await API.get('/user'); 
@@ -15,6 +17,20 @@ function App() {
     }
   }
 
+  const addDataUser = async() => {
+    try{
+      const response = await API.post('/user', dataUserInsert).then(response => setData(response.data));
+      return response.data;
+    } catch(err){
+      console.error("Error: ", err);
+    }
+  }
+
+  // Function for handling UI Action
+  const handleInsertUser = async() => {
+    
+  }
+  
   useEffect(() => {
     fetchDataUsers();
   });
@@ -22,7 +38,6 @@ function App() {
   return (
     <>
       <h1>Testing POS API</h1>
-      {/* {console.log(dataUsers)} */}
       <table>
         <thead>
           <th>Username</th>
@@ -41,6 +56,11 @@ function App() {
           ))}
         </tbody>
       </table>
+      <h1>Input User</h1>
+      <form action="#">
+        <label htmlFor="">Username</label>
+        <input type="text" name="userame"/>
+      </form>
     </>
   );
 }
